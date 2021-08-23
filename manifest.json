@@ -1,0 +1,26 @@
+{
+  "name": "Cookie Transfer",
+  "description": "Extension to transfer cookies from one domain to another",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "icons": {
+    "16": "./cookie.png",
+    "32": "./cookie.png",
+    "48": "./cookie.png",
+    "128": "./cookie.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "./cookie.png",
+      "32": "./cookie.png",
+      "48": "./cookie.png",
+      "128": "./cookie.png"
+    }
+  },
+  "permissions": ["cookies"],
+  "host_permissions": ["http://*/*", "https://*/*"]
+}
