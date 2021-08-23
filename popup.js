@@ -6,29 +6,31 @@ let cookiesSaved;
 
 function onLoad() {
   chrome.cookies.getAll({}, function (cookies) {
-    console.log("Found cookies: ", cookies);
-
     cookiesSaved = cookies;
   });
 }
 function copyCookies(from, to) {
-  console.log("input value is : " + from.value);
-
-  const foundCookies = cookiesSaved.filter(
-    (cookie) => cookie.domain === from.value
-  );
+  const foundCookies = cookiesSaved.filter((cookie) => cookie.domain === from);
 
   foundCookies.forEach((cookie) => {
     const { hostOnly, session, ...rest } = cookie;
-    const newCookie = { ...rest, domain: to.value, url: `https://${to.value}` };
-    console.log("Set cookie", newCookie);
+    const newCookie = { ...rest, domain: to, url: `https://${to}` };
     chrome.cookies.set(newCookie);
   });
 }
 
 function documentEvents() {
   document.getElementById("submit").addEventListener("click", function () {
-    copyCookies(document.getElementById("from"), document.getElementById("to"));
+    const from = document.getElementById("from").value;
+    const to = document.getElementById("to").value;
+
+    if (!from || !to) {
+      document.getElementById("error").innerText =
+        "From or to must not be empty";
+      return;
+    }
+
+    copyCookies(from, to);
   });
 }
 
